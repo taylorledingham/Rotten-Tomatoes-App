@@ -7,13 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		90AD5A421A018BFC00EB2921 /* DetailMovieTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90AD5A411A018BFC00EB2921 /* DetailMovieTableViewController.m */; };
+		90AD5A461A01925700EB2921 /* checkmarkicon@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 90AD5A451A01925700EB2921 /* checkmarkicon@x2.png */; };
+		90AD5A491A01974000EB2921 /* ReviewTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90AD5A481A01974000EB2921 /* ReviewTableViewController.m */; };
+		90AD5A4C1A01A12400EB2921 /* ReviewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90AD5A4B1A01A12400EB2921 /* ReviewTableViewCell.m */; };
+		90AD5A4F1A01A6E900EB2921 /* ReviewLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90AD5A4E1A01A6E900EB2921 /* ReviewLinkViewController.m */; };
+		90AD5A521A01B09100EB2921 /* MovieCollectionViewFooterCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90AD5A511A01B09100EB2921 /* MovieCollectionViewFooterCollectionReusableView.m */; };
 		90BA70071A013E190003B304 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 90BA70061A013E190003B304 /* main.m */; };
 		90BA700A1A013E190003B304 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 90BA70091A013E190003B304 /* AppDelegate.m */; };
-		90BA700D1A013E190003B304 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90BA700C1A013E190003B304 /* ViewController.m */; };
 		90BA70101A013E190003B304 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90BA700E1A013E190003B304 /* Main.storyboard */; };
 		90BA70121A013E190003B304 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90BA70111A013E190003B304 /* Images.xcassets */; };
 		90BA70151A013E190003B304 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90BA70131A013E190003B304 /* LaunchScreen.xib */; };
 		90BA70211A013E190003B304 /* Rotten_MangoesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 90BA70201A013E190003B304 /* Rotten_MangoesTests.m */; };
+		90BA702C1A0140950003B304 /* Movie.m in Sources */ = {isa = PBXBuildFile; fileRef = 90BA702B1A0140950003B304 /* Movie.m */; };
+		90BA702F1A0140CE0003B304 /* MovieCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90BA702E1A0140CE0003B304 /* MovieCollectionViewController.m */; };
+		90BA70321A0176790003B304 /* MovieCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90BA70311A0176790003B304 /* MovieCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,19 +35,34 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		90AD5A401A018BFC00EB2921 /* DetailMovieTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailMovieTableViewController.h; sourceTree = "<group>"; };
+		90AD5A411A018BFC00EB2921 /* DetailMovieTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailMovieTableViewController.m; sourceTree = "<group>"; };
+		90AD5A451A01925700EB2921 /* checkmarkicon@x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkmarkicon@x2.png"; sourceTree = "<group>"; };
+		90AD5A471A01974000EB2921 /* ReviewTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewTableViewController.h; sourceTree = "<group>"; };
+		90AD5A481A01974000EB2921 /* ReviewTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewTableViewController.m; sourceTree = "<group>"; };
+		90AD5A4A1A01A12400EB2921 /* ReviewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewTableViewCell.h; sourceTree = "<group>"; };
+		90AD5A4B1A01A12400EB2921 /* ReviewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewTableViewCell.m; sourceTree = "<group>"; };
+		90AD5A4D1A01A6E900EB2921 /* ReviewLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewLinkViewController.h; sourceTree = "<group>"; };
+		90AD5A4E1A01A6E900EB2921 /* ReviewLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewLinkViewController.m; sourceTree = "<group>"; };
+		90AD5A501A01B09100EB2921 /* MovieCollectionViewFooterCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovieCollectionViewFooterCollectionReusableView.h; sourceTree = "<group>"; };
+		90AD5A511A01B09100EB2921 /* MovieCollectionViewFooterCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieCollectionViewFooterCollectionReusableView.m; sourceTree = "<group>"; };
 		90BA70011A013E190003B304 /* Rotten Mangoes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Rotten Mangoes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		90BA70051A013E190003B304 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		90BA70061A013E190003B304 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		90BA70081A013E190003B304 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		90BA70091A013E190003B304 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		90BA700B1A013E190003B304 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		90BA700C1A013E190003B304 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		90BA700F1A013E190003B304 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		90BA70111A013E190003B304 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		90BA70141A013E190003B304 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		90BA701A1A013E190003B304 /* Rotten MangoesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Rotten MangoesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		90BA701F1A013E190003B304 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		90BA70201A013E190003B304 /* Rotten_MangoesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Rotten_MangoesTests.m; sourceTree = "<group>"; };
+		90BA702A1A0140950003B304 /* Movie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Movie.h; path = ../Movie.h; sourceTree = "<group>"; };
+		90BA702B1A0140950003B304 /* Movie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Movie.m; path = ../Movie.m; sourceTree = "<group>"; };
+		90BA702D1A0140CE0003B304 /* MovieCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MovieCollectionViewController.h; path = ../MovieCollectionViewController.h; sourceTree = "<group>"; };
+		90BA702E1A0140CE0003B304 /* MovieCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MovieCollectionViewController.m; path = ../MovieCollectionViewController.m; sourceTree = "<group>"; };
+		90BA70301A0176790003B304 /* MovieCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovieCollectionViewCell.h; sourceTree = "<group>"; };
+		90BA70311A0176790003B304 /* MovieCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +89,7 @@
 				90BA70031A013E190003B304 /* Rotten Mangoes */,
 				90BA701D1A013E190003B304 /* Rotten MangoesTests */,
 				90BA70021A013E190003B304 /* Products */,
+				90AD5A451A01925700EB2921 /* checkmarkicon@x2.png */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,11 +105,25 @@
 		90BA70031A013E190003B304 /* Rotten Mangoes */ = {
 			isa = PBXGroup;
 			children = (
+				90BA702D1A0140CE0003B304 /* MovieCollectionViewController.h */,
+				90BA702E1A0140CE0003B304 /* MovieCollectionViewController.m */,
+				90BA702A1A0140950003B304 /* Movie.h */,
+				90BA702B1A0140950003B304 /* Movie.m */,
 				90BA70081A013E190003B304 /* AppDelegate.h */,
 				90BA70091A013E190003B304 /* AppDelegate.m */,
-				90BA700B1A013E190003B304 /* ViewController.h */,
-				90BA700C1A013E190003B304 /* ViewController.m */,
 				90BA700E1A013E190003B304 /* Main.storyboard */,
+				90AD5A501A01B09100EB2921 /* MovieCollectionViewFooterCollectionReusableView.h */,
+				90AD5A511A01B09100EB2921 /* MovieCollectionViewFooterCollectionReusableView.m */,
+				90AD5A4D1A01A6E900EB2921 /* ReviewLinkViewController.h */,
+				90AD5A4E1A01A6E900EB2921 /* ReviewLinkViewController.m */,
+				90AD5A401A018BFC00EB2921 /* DetailMovieTableViewController.h */,
+				90AD5A411A018BFC00EB2921 /* DetailMovieTableViewController.m */,
+				90AD5A471A01974000EB2921 /* ReviewTableViewController.h */,
+				90AD5A481A01974000EB2921 /* ReviewTableViewController.m */,
+				90AD5A4A1A01A12400EB2921 /* ReviewTableViewCell.h */,
+				90AD5A4B1A01A12400EB2921 /* ReviewTableViewCell.m */,
+				90BA70301A0176790003B304 /* MovieCollectionViewCell.h */,
+				90BA70311A0176790003B304 /* MovieCollectionViewCell.m */,
 				90BA70111A013E190003B304 /* Images.xcassets */,
 				90BA70131A013E190003B304 /* LaunchScreen.xib */,
 				90BA70041A013E190003B304 /* Supporting Files */,
@@ -202,6 +240,7 @@
 				90BA70101A013E190003B304 /* Main.storyboard in Resources */,
 				90BA70151A013E190003B304 /* LaunchScreen.xib in Resources */,
 				90BA70121A013E190003B304 /* Images.xcassets in Resources */,
+				90AD5A461A01925700EB2921 /* checkmarkicon@x2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,8 +258,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90BA700D1A013E190003B304 /* ViewController.m in Sources */,
+				90AD5A521A01B09100EB2921 /* MovieCollectionViewFooterCollectionReusableView.m in Sources */,
+				90BA702C1A0140950003B304 /* Movie.m in Sources */,
+				90BA70321A0176790003B304 /* MovieCollectionViewCell.m in Sources */,
+				90AD5A491A01974000EB2921 /* ReviewTableViewController.m in Sources */,
+				90BA702F1A0140CE0003B304 /* MovieCollectionViewController.m in Sources */,
+				90AD5A4F1A01A6E900EB2921 /* ReviewLinkViewController.m in Sources */,
 				90BA700A1A013E190003B304 /* AppDelegate.m in Sources */,
+				90AD5A4C1A01A12400EB2921 /* ReviewTableViewCell.m in Sources */,
+				90AD5A421A018BFC00EB2921 /* DetailMovieTableViewController.m in Sources */,
 				90BA70071A013E190003B304 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,6 +458,7 @@
 				90BA70261A013E190003B304 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		90BA70271A013E190003B304 /* Build configuration list for PBXNativeTarget "Rotten MangoesTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +467,7 @@
 				90BA70291A013E190003B304 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
