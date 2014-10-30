@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		90A0FC9B1A02B0E400AC433F /* TheatreMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A0FC9A1A02B0E400AC433F /* TheatreMapViewController.m */; };
+		90A0FC9D1A02B1DF00AC433F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A0FC9C1A02B1DF00AC433F /* MapKit.framework */; };
+		90A0FC9F1A02B1E700AC433F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A0FC9E1A02B1E700AC433F /* CoreLocation.framework */; };
+		90A0FCA21A02C4B200AC433F /* TheatreLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A0FCA11A02C4B200AC433F /* TheatreLocation.m */; };
+		90A0FCA51A02CA7300AC433F /* MapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A0FCA41A02CA7300AC433F /* MapPin.m */; };
+		90A0FCA71A02FF7300AC433F /* PodFile in Resources */ = {isa = PBXBuildFile; fileRef = 90A0FCA61A02FF7300AC433F /* PodFile */; };
 		90AD5A421A018BFC00EB2921 /* DetailMovieTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90AD5A411A018BFC00EB2921 /* DetailMovieTableViewController.m */; };
 		90AD5A461A01925700EB2921 /* checkmarkicon@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 90AD5A451A01925700EB2921 /* checkmarkicon@x2.png */; };
 		90AD5A491A01974000EB2921 /* ReviewTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90AD5A481A01974000EB2921 /* ReviewTableViewController.m */; };
@@ -35,6 +41,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		90A0FC991A02B0E400AC433F /* TheatreMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheatreMapViewController.h; sourceTree = "<group>"; };
+		90A0FC9A1A02B0E400AC433F /* TheatreMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheatreMapViewController.m; sourceTree = "<group>"; };
+		90A0FC9C1A02B1DF00AC433F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		90A0FC9E1A02B1E700AC433F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		90A0FCA01A02C4B200AC433F /* TheatreLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheatreLocation.h; sourceTree = "<group>"; };
+		90A0FCA11A02C4B200AC433F /* TheatreLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheatreLocation.m; sourceTree = "<group>"; };
+		90A0FCA31A02CA7300AC433F /* MapPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapPin.h; sourceTree = "<group>"; };
+		90A0FCA41A02CA7300AC433F /* MapPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapPin.m; sourceTree = "<group>"; };
+		90A0FCA61A02FF7300AC433F /* PodFile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PodFile; sourceTree = "<group>"; };
 		90AD5A401A018BFC00EB2921 /* DetailMovieTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailMovieTableViewController.h; sourceTree = "<group>"; };
 		90AD5A411A018BFC00EB2921 /* DetailMovieTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailMovieTableViewController.m; sourceTree = "<group>"; };
 		90AD5A451A01925700EB2921 /* checkmarkicon@x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkmarkicon@x2.png"; sourceTree = "<group>"; };
@@ -70,6 +85,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90A0FC9F1A02B1E700AC433F /* CoreLocation.framework in Frameworks */,
+				90A0FC9D1A02B1DF00AC433F /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +103,9 @@
 		90BA6FF81A013E190003B304 = {
 			isa = PBXGroup;
 			children = (
+				90A0FCA61A02FF7300AC433F /* PodFile */,
+				90A0FC9E1A02B1E700AC433F /* CoreLocation.framework */,
+				90A0FC9C1A02B1DF00AC433F /* MapKit.framework */,
 				90BA70031A013E190003B304 /* Rotten Mangoes */,
 				90BA701D1A013E190003B304 /* Rotten MangoesTests */,
 				90BA70021A013E190003B304 /* Products */,
@@ -107,6 +127,8 @@
 			children = (
 				90BA702D1A0140CE0003B304 /* MovieCollectionViewController.h */,
 				90BA702E1A0140CE0003B304 /* MovieCollectionViewController.m */,
+				90BA70301A0176790003B304 /* MovieCollectionViewCell.h */,
+				90BA70311A0176790003B304 /* MovieCollectionViewCell.m */,
 				90BA702A1A0140950003B304 /* Movie.h */,
 				90BA702B1A0140950003B304 /* Movie.m */,
 				90BA70081A013E190003B304 /* AppDelegate.h */,
@@ -114,6 +136,12 @@
 				90BA700E1A013E190003B304 /* Main.storyboard */,
 				90AD5A501A01B09100EB2921 /* MovieCollectionViewFooterCollectionReusableView.h */,
 				90AD5A511A01B09100EB2921 /* MovieCollectionViewFooterCollectionReusableView.m */,
+				90A0FC991A02B0E400AC433F /* TheatreMapViewController.h */,
+				90A0FC9A1A02B0E400AC433F /* TheatreMapViewController.m */,
+				90A0FCA31A02CA7300AC433F /* MapPin.h */,
+				90A0FCA41A02CA7300AC433F /* MapPin.m */,
+				90A0FCA01A02C4B200AC433F /* TheatreLocation.h */,
+				90A0FCA11A02C4B200AC433F /* TheatreLocation.m */,
 				90AD5A4D1A01A6E900EB2921 /* ReviewLinkViewController.h */,
 				90AD5A4E1A01A6E900EB2921 /* ReviewLinkViewController.m */,
 				90AD5A401A018BFC00EB2921 /* DetailMovieTableViewController.h */,
@@ -122,8 +150,6 @@
 				90AD5A481A01974000EB2921 /* ReviewTableViewController.m */,
 				90AD5A4A1A01A12400EB2921 /* ReviewTableViewCell.h */,
 				90AD5A4B1A01A12400EB2921 /* ReviewTableViewCell.m */,
-				90BA70301A0176790003B304 /* MovieCollectionViewCell.h */,
-				90BA70311A0176790003B304 /* MovieCollectionViewCell.m */,
 				90BA70111A013E190003B304 /* Images.xcassets */,
 				90BA70131A013E190003B304 /* LaunchScreen.xib */,
 				90BA70041A013E190003B304 /* Supporting Files */,
@@ -238,6 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				90BA70101A013E190003B304 /* Main.storyboard in Resources */,
+				90A0FCA71A02FF7300AC433F /* PodFile in Resources */,
 				90BA70151A013E190003B304 /* LaunchScreen.xib in Resources */,
 				90BA70121A013E190003B304 /* Images.xcassets in Resources */,
 				90AD5A461A01925700EB2921 /* checkmarkicon@x2.png in Resources */,
@@ -264,9 +291,12 @@
 				90AD5A491A01974000EB2921 /* ReviewTableViewController.m in Sources */,
 				90BA702F1A0140CE0003B304 /* MovieCollectionViewController.m in Sources */,
 				90AD5A4F1A01A6E900EB2921 /* ReviewLinkViewController.m in Sources */,
+				90A0FCA51A02CA7300AC433F /* MapPin.m in Sources */,
 				90BA700A1A013E190003B304 /* AppDelegate.m in Sources */,
 				90AD5A4C1A01A12400EB2921 /* ReviewTableViewCell.m in Sources */,
+				90A0FC9B1A02B0E400AC433F /* TheatreMapViewController.m in Sources */,
 				90AD5A421A018BFC00EB2921 /* DetailMovieTableViewController.m in Sources */,
+				90A0FCA21A02C4B200AC433F /* TheatreLocation.m in Sources */,
 				90BA70071A013E190003B304 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

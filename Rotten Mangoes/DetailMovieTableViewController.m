@@ -34,8 +34,8 @@
     
     self.movieTitleLabel.text = self.currMovie.movieTitle;
     self.movieDescLabel.text = self.currMovie.movieSynopsis;
-    self.releaseDateLabel.text = [NSString stringWithFormat:@"Release Date %@" ,[dateFormat stringFromDate:movieDate]];
-    self.moviePosterImage.image = self.currMovie.movieThumbnail;
+    self.releaseDateLabel.text = [NSString stringWithFormat:@"Release Date: %@" ,[dateFormat stringFromDate:movieDate]];
+    self.moviePosterImage.image = self.currMovie.moviePoster;
     self.audienceScoreLabel.text = [self.currMovie.audienceRating stringByAppendingString:@"%"];
     self.criticScoreLabel.text = [self.currMovie.criticRating stringByAppendingString:@"%"];
 }
@@ -104,7 +104,17 @@
         
     }
     
+    else if ([segue.identifier isEqual:@"showMovieTheatres"]) {
+        
+        TheatreMapViewController *theatreMapVC = segue.destinationViewController;
+        theatreMapVC.movieTitle = [[NSString alloc]init];
+        theatreMapVC.movieTitle = [NSString stringWithFormat:@"%@", self.currMovie.movieTitle];
+        
+    }
+    
 }
 
 
+- (IBAction)getMovieListings:(id)sender {
+}
 @end

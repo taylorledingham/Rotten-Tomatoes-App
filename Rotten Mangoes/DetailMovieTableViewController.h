@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Movie.h"
+#import "TheatreMapViewController.h"
 
 @interface DetailMovieTableViewController : UITableViewController
 
@@ -19,5 +20,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *audienceScoreLabel;
 
 @property (strong, nonatomic) Movie *currMovie;
+- (IBAction)getMovieListings:(id)sender;
 
 @end

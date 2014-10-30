@@ -26,7 +26,7 @@ static NSString * const reuseIdentifier = @"Cell";
     
     // Uncomment the following line to preserve selection between presentations
     // self.clearsSelectionOnViewWillAppear = NO;
-    
+    [self setupCollectionView];
     self.movieArray = [[NSMutableArray alloc]init];
     currentPage = 1 ;
     // Register cell classes
@@ -44,8 +44,9 @@ static NSString * const reuseIdentifier = @"Cell";
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:movieURL];
     
-    
-    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+    //wrap in non main default queue.
+ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+     [[session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
         
         if (error) {
             NSLog(@"Error is %@", [error localizedDescription]);
@@ -55,7 +56,7 @@ static NSString * const reuseIdentifier = @"Cell";
             
             NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
             self.movieDictionary =  [responseDictionary valueForKey:@"movies"];
-            nextPageURLString = [responseDictionary valueForKey:@"movies"][@"next"];
+            //nextPageURLString = [responseDictionary valueForKey:@"movies"][@"next"];
             [self loadMovieArray];
             [footer stopSpinner];
             
@@ -63,9 +64,8 @@ static NSString * const reuseIdentifier = @"Cell";
                 [self.collectionView reloadData];
             });
         }
-    }];
-    
-    [task resume];
+    }] resume];
+ });
 
 }
 
@@ -88,6 +88,7 @@ static NSString * const reuseIdentifier = @"Cell";
         movie.movieThumbnail = img;
         
         imageString = currMovie[@"posters"][@"original"];
+        //imageString = [imageString stringByReplacingOccurrencesOfString:@"tmb" withString:@"org"];
         url = [NSURL URLWithString: imageString];
         data = [NSData dataWithContentsOfURL:url];
         img = [[UIImage alloc] initWithData:data];
@@ -104,6 +105,18 @@ static NSString * const reuseIdentifier = @"Cell";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)setupCollectionView {
+    
+//    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+//    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+//    flowLayout.minimumInteritemSpacing = 1.0;
+//    flowLayout.minimumLineSpacing = 1.0;
+//    [flowLayout setItemSize:CGSizeMake(150, 150)];
+//    [self.collectionView setCollectionViewLayout:flowLayout];
+
+}
+
 
 
 #pragma mark - Navigation
