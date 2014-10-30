@@ -15,6 +15,7 @@
 @implementation MovieCollectionViewController {
     NSURL *movieURL;
     MovieCollectionViewFooterCollectionReusableView *footer;
+    NSString *nextPageURLString;
     int currentPage;
 }
 
@@ -54,6 +55,7 @@ static NSString * const reuseIdentifier = @"Cell";
             
             NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
             self.movieDictionary =  [responseDictionary valueForKey:@"movies"];
+            nextPageURLString = [responseDictionary valueForKey:@"movies"][@"next"];
             [self loadMovieArray];
             [footer stopSpinner];
             
