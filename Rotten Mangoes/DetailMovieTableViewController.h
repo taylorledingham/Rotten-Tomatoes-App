@@ -21,6 +21,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *audienceScoreLabel;
 
 @property (strong, nonatomic) Movie *currMovie;
-- (IBAction)getMovieListings:(id)sender;
 
 @end

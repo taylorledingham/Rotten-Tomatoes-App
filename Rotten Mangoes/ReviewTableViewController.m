@@ -28,6 +28,7 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.reviewArray = [[NSMutableArray alloc]init];
     
     NSString *reviewURLString = [NSString stringWithFormat: @"http://api.rottentomatoes.com/api/public/v1.0/movies/%@/reviews.json?review_type=top_critic&page_limit=3&page=1&country=us&apikey=dk9s9j76292h6jk44dh5ru92", self.movieID ];
     
@@ -56,7 +57,7 @@
         
         self.reviewArray = [responseDictionary valueForKey:@"reviews"];
             if(self.reviewArray.count == 0 ){
-                [self.reviewArray addObject:[[NSNull alloc]init]];
+                //[self.reviewArray addObject: nil];
             }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -84,6 +85,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
+    if (self.reviewArray.count == 0) {
+        return 1;
+    }
     return self.reviewArray.count;
 }
 
@@ -91,7 +95,17 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ReviewTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-    
+    if (self.reviewArray.count == 0) {
+        NSString *nilName = @"No reviews";
+        NSString *nilQuote = @"";
+        
+        [cell.reviewerNameLabel setText: nilName];
+        [cell.reviewQuoteTextView setText: nilQuote];
+        
+        cell.userInteractionEnabled = NO;
+        
+        return cell;
+    }
     
     NSString *reviewerName = self.reviewArray[indexPath.row][@"critic"];
     NSString *reviewerQuote = self.reviewArray[indexPath.row][@"quote"];
