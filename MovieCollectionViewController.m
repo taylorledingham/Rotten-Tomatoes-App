@@ -24,15 +24,10 @@ static NSString * const reuseIdentifier = @"Cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
-    [self setupCollectionView];
+
     self.movieArray = [[NSMutableArray alloc]init];
     currentPage = 1 ;
-    // Register cell classes
-    //[self.collectionView registerClass:[MovieCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     NSString *urlString = [[NSString alloc] initWithFormat:@"http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?page_limit=15&page=%d&country=ca&apikey=dk9s9j76292h6jk44dh5ru92", currentPage];
-    //urlString = [[NSString alloc]initWithFormat:@"http://api.rottentomatoes.com/api/public/v1.0.json?apikey=dk9s9j76292h6jk44dh5ru92"];
     movieURL = [[NSURL alloc]initWithString:urlString];
     [self loadMovies];
     [self loadMovieArray];
@@ -45,7 +40,7 @@ static NSString * const reuseIdentifier = @"Cell";
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:movieURL];
     
     //wrap in non main default queue.
- dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
      [[session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
         
         if (error) {
@@ -80,42 +75,34 @@ static NSString * const reuseIdentifier = @"Cell";
         movie.movieID = currMovie[@"id"];
         movie.criticRating = [NSString stringWithFormat: @"%@", currMovie[@"ratings"][@"critics_score"]];
         movie.audienceRating = [NSString stringWithFormat:@"%@", currMovie[@"ratings"][@"audience_score"]];
+        
+        
        
         NSString *imageString = currMovie[@"posters"][@"thumbnail"];
-        NSURL *url = [NSURL URLWithString: imageString];
-        NSData *data = [NSData dataWithContentsOfURL:url];
-        UIImage *img = [[UIImage alloc] initWithData:data];
-        movie.movieThumbnail = img;
-        
-        imageString = currMovie[@"posters"][@"original"];
-        //imageString = [imageString stringByReplacingOccurrencesOfString:@"tmb" withString:@"org"];
-        url = [NSURL URLWithString: imageString];
-        data = [NSData dataWithContentsOfURL:url];
-        img = [[UIImage alloc] initWithData:data];
-        movie.moviePoster = img;
-        
+        movie.movieThumbnailURL = [NSURL URLWithString:imageString];
+
         
         [self.movieArray addObject:movie];
+        imageString = currMovie[@"posters"][@"original"];
+        imageString = [imageString stringByReplacingOccurrencesOfString:@"tmb" withString:@"org"];
+        NSURL *url = [NSURL URLWithString: imageString];
+        movie.moviePosterURL = url;
+        [self.collectionView reloadData];
+
+
     }
     
-    
 }
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
--(void)setupCollectionView {
-    
-//    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-//    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-//    flowLayout.minimumInteritemSpacing = 1.0;
-//    flowLayout.minimumLineSpacing = 1.0;
-//    [flowLayout setItemSize:CGSizeMake(150, 150)];
-//    [self.collectionView setCollectionViewLayout:flowLayout];
 
-}
 
 
 
@@ -148,39 +135,14 @@ static NSString * const reuseIdentifier = @"Cell";
     MovieCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     Movie *movie = self.movieArray[indexPath.row] ;
-    
+    cell.movieImageURL = movie.movieThumbnailURL;
     [cell setUpCell:movie];
-    
-   // cell.backgroundColor = [UIColor redColor];
-    
-    // Configure the cell
     
     
     return cell;
 }
 
-#pragma mark <UICollectionViewDelegate>
 
-//-(void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-////    CGFloat height = scrollView.frame.size.height;
-////    
-////    CGFloat contentYoffset = scrollView.contentOffset.y;
-////    
-////    CGFloat distanceFromBottom = scrollView.contentSize.height - contentYoffset;
-////    
-////    if(distanceFromBottom < height)
-////    {
-////        NSLog(@"end of the table");
-////        [self loadAnotherPage];
-////    }
-//    
-//    float bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height;
-//    if (bottomEdge >= scrollView.contentSize.height) {
-//        [self loadAnotherPage];
-//        
-//    }
-//}
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
@@ -213,6 +175,9 @@ static NSString * const reuseIdentifier = @"Cell";
     
 }
 
+#pragma mark <UICollectionViewDelegate>
+
+
 - (UICollectionReusableView *)collectionView:(UICollectionView *)theCollectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)theIndexPath
 {
     
@@ -224,33 +189,10 @@ static NSString * const reuseIdentifier = @"Cell";
     return footer;
 }
 
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-*/
-
-/*
-// Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-*/
-
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
+-(void)backup{
+    
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
-}
 
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
-}
-*/
 
 @end

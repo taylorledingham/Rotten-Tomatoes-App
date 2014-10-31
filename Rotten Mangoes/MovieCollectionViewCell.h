@@ -11,7 +11,9 @@
 
 @interface MovieCollectionViewCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *movieImage;
+@property (weak, nonatomic) IBOutlet UIImageView *movieImageView;
+@property (weak, nonatomic) NSURL *movieImageURL;
+
 @property (weak, nonatomic) IBOutlet UILabel *movieTitleLabel;
 @property (strong, nonatomic) Movie *movie;
 

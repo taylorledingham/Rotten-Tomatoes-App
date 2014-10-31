@@ -7,6 +7,7 @@
 //
 
 #import "MovieCollectionViewCell.h"
+#import <SDWebImageManager.h>
 
 @implementation MovieCollectionViewCell
 
@@ -14,8 +15,19 @@
     
     self.movie = myMovie;
    [self.movieTitleLabel setText: self.movie.movieTitle];
-    self.movieImage.image = self.movie.movieThumbnail;
-  //  self.backgroundColor = [UIColor redColor];
+    
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    [manager downloadImageWithURL:self.movieImageURL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        NSLog(@"downloading image: %f %%", (float)receivedSize/(float)expectedSize);
+    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        NSLog(@"%@", image);
+        self.movieImageView.image = image;
+
+    }
+     
+     ];
+    
+    
     
 }
 

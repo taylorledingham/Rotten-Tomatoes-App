@@ -55,6 +55,9 @@
             NSLog(@"%@", responseDictionary.description);
         
         self.reviewArray = [responseDictionary valueForKey:@"reviews"];
+            if(self.reviewArray.count == 0 ){
+                [self.reviewArray addObject:[[NSNull alloc]init]];
+            }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];

@@ -35,9 +35,20 @@
     self.movieTitleLabel.text = self.currMovie.movieTitle;
     self.movieDescLabel.text = self.currMovie.movieSynopsis;
     self.releaseDateLabel.text = [NSString stringWithFormat:@"Release Date: %@" ,[dateFormat stringFromDate:movieDate]];
-    self.moviePosterImage.image = self.currMovie.moviePoster;
+    //self.moviePosterImage.image = self.currMovie.moviePoster;
     self.audienceScoreLabel.text = [self.currMovie.audienceRating stringByAppendingString:@"%"];
     self.criticScoreLabel.text = [self.currMovie.criticRating stringByAppendingString:@"%"];
+    
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    [manager downloadImageWithURL:self.currMovie.moviePosterURL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        NSLog(@"downloading image: %f %%", (float)receivedSize/(float)expectedSize);
+    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        NSLog(@"%@", image);
+       self.moviePosterImage.image = image;
+        
+    }
+     
+     ];
 }
 
 - (void)didReceiveMemoryWarning {

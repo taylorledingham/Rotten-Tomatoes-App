@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Movie.h"
 #import "TheatreMapViewController.h"
+#import <SDWebImageManager.h>
 
 @interface DetailMovieTableViewController : UITableViewController
 
