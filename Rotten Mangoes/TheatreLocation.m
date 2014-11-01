@@ -10,4 +10,12 @@
 
 @implementation TheatreLocation
 
+@dynamic theatreID;
+@dynamic theatreName;
+@dynamic theatreAddress;
+@dynamic lat;
+@dynamic lng;
+@dynamic theatreShowtimes;
+
+
 @end

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A389" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Movie" representedClassName="Movie" syncable="YES">
+        <attribute name="audienceRating" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="criticRating" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dateLastUpdated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="movieID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="moviePoster" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="moviePosterURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="movieSynopsis" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="movieThumbnail" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="movieThumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="movieTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="releaseDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="yearMade" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="movieShowtimes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Showtime" inverseName="movie" inverseEntity="Showtime" syncable="YES"/>
+    </entity>
+    <entity name="Showtime" representedClassName="Showtime" syncable="YES">
+        <attribute name="lastUpdated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="movieTime" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="movie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Movie" inverseName="movieShowtimes" inverseEntity="Movie" syncable="YES"/>
+        <relationship name="theatre" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TheatreLocation" inverseName="theatreShowtimes" inverseEntity="TheatreLocation" syncable="YES"/>
+    </entity>
+    <entity name="TheatreLocation" representedClassName="TheatreLocation" syncable="YES">
+        <attribute name="lat" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="lng" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="theatreAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="theatreID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="theatreName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="theatreShowtimes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Showtime" inverseName="theatre" inverseEntity="Showtime" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Movie" positionX="-180" positionY="-27" width="128" height="238"/>
+        <element name="Showtime" positionX="81" positionY="62" width="128" height="103"/>
+        <element name="TheatreLocation" positionX="324" positionY="-0" width="128" height="133"/>
+    </elements>
+</model>

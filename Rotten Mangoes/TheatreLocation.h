@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import "Showtime.h"
 
-@interface TheatreLocation : NSObject
+@interface TheatreLocation : NSManagedObject
 
 @property (strong, nonatomic) NSString *theatreID;
 @property (strong, nonatomic) NSString *theatreName;
@@ -17,5 +18,6 @@
 @property (strong, nonatomic) CLLocation *theatreLocation;
 @property (nonatomic) double lat;
 @property (nonatomic) double lng;
+@property (retain, nonatomic) NSSet *theatreShowtimes;
 
 @end

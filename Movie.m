@@ -10,6 +10,18 @@
 
 @implementation Movie
 
+@dynamic movieID;
+@dynamic movieTitle;
+@dynamic releaseDate;
+@dynamic movieSynopsis;
+@dynamic criticRating;
+@dynamic audienceRating;
+@dynamic moviePoster;
+@dynamic moviePosterURL;
+@dynamic movieThumbnail;
+@dynamic movieThumbnailURL;
+@dynamic movieShowtimes;
+@dynamic dateLastUpdated;
 
 
 @end

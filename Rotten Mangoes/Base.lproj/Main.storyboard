@@ -552,7 +552,6 @@
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="getMovieListings:" destination="X9d-GR-nKS" eventType="touchUpInside" id="fyJ-Gh-xVA"/>
                                                         <segue destination="FFb-bN-pgr" kind="show" identifier="showMovieTheatres" id="Yjd-gw-4hg"/>
                                                     </connections>
                                                 </button>

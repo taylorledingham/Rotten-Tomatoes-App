@@ -49,9 +49,12 @@
     //self.moviePosterImage.image = self.currMovie.moviePoster;
     self.audienceScoreLabel.text = [self.currMovie.audienceRating stringByAppendingString:@"%"];
     self.criticScoreLabel.text = [self.currMovie.criticRating stringByAppendingString:@"%"];
-    
+    if (self.currMovie.moviePosterURL == nil){
+        self.moviePosterImage.image = [UIImage imageNamed:@"checkmarkicon@x2"];
+    }
+    else {
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
-    [manager downloadImageWithURL:self.currMovie.moviePosterURL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+    [manager downloadImageWithURL:[NSURL URLWithString: self.currMovie.moviePosterURL] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         NSLog(@"downloading image: %f %%", (float)receivedSize/(float)expectedSize);
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
         NSLog(@"%@", image);
@@ -60,6 +63,7 @@
     }
      
      ];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -88,6 +92,7 @@
         TheatreMapViewController *theatreMapVC = segue.destinationViewController;
         theatreMapVC.movieTitle = [[NSString alloc]init];
         theatreMapVC.movieTitle = [NSString stringWithFormat:@"%@", self.currMovie.movieTitle];
+        theatreMapVC.currMovie = self.currMovie;
         
     }
     

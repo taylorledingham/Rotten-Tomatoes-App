@@ -14,8 +14,11 @@
 
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 @property (copy, nonatomic) NSString *title;
+@property (copy, nonatomic) NSString *subtitle;
+@property (copy, nonatomic) UIImage *pinImage;
 
-- (id)initWithCoordinates:(CLLocationCoordinate2D)location placeName:(NSString *)placeName;
+- (id)initWithCoordinates:(CLLocationCoordinate2D)location placeName:(NSString *)placeName subtitle:(NSString *)subtitle andPinImage:(UIImage *)pinImage;
 
+-(MKAnnotationView *)annotationView;
 
 @end

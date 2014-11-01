@@ -13,9 +13,11 @@
 #import "MovieCollectionViewFooterCollectionReusableView.h"
 #import  <SDImageCache.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "TLCoreDataStack.h"
+
 @interface MovieCollectionViewController : UICollectionViewController
 
-@property (strong, nonatomic) NSMutableArray *movieDictionary;
+@property (strong, nonatomic) NSMutableArray *movieArrayFromAPI;
 @property (strong, nonatomic) NSMutableArray *movieArray;
 
 
