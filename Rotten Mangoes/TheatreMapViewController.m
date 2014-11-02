@@ -27,6 +27,8 @@
     NSURL *theatreURL;
     NSString *theatreID;
     NSMutableArray *pinImageArray;
+    MKRoute *route;
+    BOOL newUpdates;
 }
 
 - (void)viewDidLoad {
@@ -44,13 +46,14 @@
     [locationManager requestWhenInUseAuthorization];
     [locationManager startUpdatingLocation];
     
+    
     self.mapView.delegate = self;
     self.mapView.showsUserLocation = YES;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self setUpPinImageArray];
     [self.fetchedResultsController performFetch:nil];
-    //[self loadTheatreArray];
+    newUpdates = NO;
     
 }
 
@@ -72,19 +75,13 @@
     [pinImageArray addObject:[UIImage imageNamed:@"pin6"]];
     [pinImageArray addObject:[UIImage imageNamed:@"pin7"]];
     [pinImageArray addObject:[UIImage imageNamed:@"pin8"]];
-    
+    [pinImageArray addObject:[UIImage imageNamed:@"pin9"]];
+    [pinImageArray addObject:[UIImage imageNamed:@"pin10"]];
+    [pinImageArray addObject:[UIImage imageNamed:@"pin11"]];
 
-    
 }
 
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
-{
-    if (foundUserLocation == NO) {
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentLocation.coordinate, 2500, 2500);
-    NSLog(@"region: %f", region.center.latitude);
-    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
-    }
-}
+
 
 #pragma mark - location manager delegate
 
@@ -120,21 +117,11 @@
     
     postalCode = userPlacemark.postalCode;
     NSLog(@"%@", postalCode);
-    [self getTheatresFromPostalCode];
+    [self deleteAndUpdateOldShowtimes];
     
 }
 
--(void) convertMovieTitleForArugments {
-    
 
-    self.movieTitleForURL = [self.movieTitle stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    NSString *newPostalCode = [[NSString alloc]init];
-    newPostalCode = [postalCode stringByReplacingOccurrencesOfString:@" " withString:@""];
-    postalCode = newPostalCode;
-    currLoc = currentLocation;
-    
-    
-}
 
 #pragma mark - Table View
 
@@ -178,11 +165,70 @@
     return  60.0;
 }
 
+#pragma mark - data methods
+
+-(void)deleteAndUpdateOldShowtimes {
+    
+    TLCoreDataStack *coreDataStack = [TLCoreDataStack defaultStack];
+    NSFetchRequest *showTimeRequest =[NSFetchRequest fetchRequestWithEntityName:@"Showtime"];
+    NSFetchRequest *theatreRequest =[self theatreListFetchRequest];
+    NSError *error;
+    NSArray *theatreResult =[coreDataStack.managedObjectContext executeFetchRequest:theatreRequest error:&error];
+    if(theatreResult.count == 0){
+        [self getTheatresFromPostalCode];
+    }
+    else {
+        
+        NSPredicate *showtimePredicate = [NSPredicate predicateWithFormat:@"movie == %@",self.currMovie];
+        showTimeRequest.predicate = showtimePredicate;
+        NSArray *result =[coreDataStack.managedObjectContext executeFetchRequest:showTimeRequest error:&error];
+        
+        for (Showtime *showtime in result) {
+            
+            NSDate *lastDay = showtime.lastUpdated;
+            NSDate *nextDay = [NSDate date];
+            
+            NSTimeInterval secondsBetween = [lastDay timeIntervalSinceDate:nextDay];
+            
+            int numberOfDays = secondsBetween / 86400;
+            
+            if(numberOfDays >= 1 ){
+                //delete showtime get new one
+                [coreDataStack.managedObjectContext deleteObject:showtime];
+                newUpdates = YES;
+            }
+            
+        }
+        if(newUpdates == YES){
+            [coreDataStack saveContext];
+            [self getTheatresFromPostalCode];
+        }
+        else {
+            [self addTheatreAnnoations];
+
+        }
+        
+    }
+    
+}
+
+-(void) convertMovieTitleForArugments {
+    
+    
+    self.movieTitleForURL = [self.movieTitle stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSString *newPostalCode = [[NSString alloc]init];
+    newPostalCode = [postalCode stringByReplacingOccurrencesOfString:@" " withString:@""];
+    postalCode = newPostalCode;
+    currLoc = currentLocation;
+    
+    
+}
 
 -(void) getTheatresFromPostalCode {
     
     [self convertMovieTitleForArugments];
     theatreURL = [NSURL URLWithString:[NSString stringWithFormat: @"http://lighthouse-movie-showtimes.herokuapp.com/theatres.json?address=%@&movie=%@", postalCode, self.movieTitleForURL ]];
+    NSLog(@"%@", theatreURL);
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:theatreURL];
     
@@ -197,12 +243,9 @@
             NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
             self.theatreLocationArray =  [responseDictionary valueForKey:@"theatres"];
             [self loadTheatreArray];
-           // NSLog(@"%@", self.theatreLocationArray.description);
             
             
             dispatch_async(dispatch_get_main_queue(), ^{
-               // [self.mapView ];
-                //add annoations
                 [self.tableView reloadData];
                 [self addTheatreAnnoations];
                 //update the map view
@@ -214,6 +257,8 @@
     
 }
 
+
+
 -(void)loadTheatreArray {
     NSMutableArray *theatreArray = [[NSMutableArray alloc]init];
     TLCoreDataStack *coreDataStack = [TLCoreDataStack defaultStack];
@@ -221,7 +266,6 @@
     for (id object in self.theatreLocationArray) {
         
         //check if
-        
         NSFetchRequest *theatreRequest =[[NSFetchRequest alloc]initWithEntityName:@"TheatreLocation"];
         NSPredicate *theatreIDPredicate = [NSPredicate predicateWithFormat:@"theatreID == %@",object[@"id"]];
         NSError *error;
@@ -237,6 +281,16 @@
         else {
             //update
             theatre = [result firstObject];
+            NSError *error;
+            NSFetchRequest *showTimeRequest =[NSFetchRequest fetchRequestWithEntityName:@"Showtime"];
+            NSPredicate *showtimeTheatrePredicate = [NSPredicate predicateWithFormat:@"theatre == %@",theatre];
+            //see if the current theatre is in the showtime table
+            showTimeRequest.predicate = showtimeTheatrePredicate;
+            NSArray *result =[coreDataStack.managedObjectContext executeFetchRequest:showTimeRequest error:&error];
+            if (result.count == 0){
+                //re-add showtime entity
+                showtime = [NSEntityDescription insertNewObjectForEntityForName:@"Showtime" inManagedObjectContext:coreDataStack.managedObjectContext];
+            }
         }
 
         
@@ -246,6 +300,8 @@
         theatre.theatreAddress = object[@"address"];
         theatre.lat = [object[@"lat"] doubleValue];
         theatre.lng =  [object[@"lng"] doubleValue];
+        NSDate *today = [NSDate date];
+        showtime.lastUpdated = today;
         //theatre.theatreLocation = [[CLLocation alloc]initWithLatitude:theatre.lat longitude:theatre.lng];
         
         showtime.theatre = theatre;
@@ -256,7 +312,19 @@
     
     self.theatreLocationArray = theatreArray;
     [coreDataStack saveContext];
+    newUpdates = NO;
     
+}
+
+#pragma mark - map view methods
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    if (foundUserLocation == NO) {
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentLocation.coordinate, 2500, 2500);
+        NSLog(@"region: %f", region.center.latitude);
+        [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+    }
 }
 
 -(void)addTheatreAnnoations {
@@ -269,28 +337,49 @@
     int i=0;
     
     for (TheatreLocation * location in results) {
-        //MKMapPointForCoordinate *coord = MKMapPointForCoordinate([location.theatreLocation coordinate]);
-       // if ([self.mapView.ma ) check if in map view
         UIImage *pin = [pinImageArray objectAtIndex:i];
         MapPin *myAnnotation = [[MapPin alloc]initWithCoordinates:CLLocationCoordinate2DMake(location.lat, location.lng) placeName:location.theatreName subtitle:location.theatreAddress andPinImage:pin];
-//        MKAnnotationView *myAnnotation = [[MKAnnotationView alloc]init];
-//        myAnnotation.coordinate = CLLocationCoordinate2DMake(location.lat, location.lng);
-//        myAnnotation.title = location.theatreName;
-//        myAnnotation.subtitle = location.theatreAddress;
         
         [self.mapView addAnnotation:myAnnotation];
         i++;
         
-        
-        
     }
-    
-    
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     //show direction
+    
+    MapPin *myAnnotation = (MapPin *)view;
+    MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
+    request.source = [MKMapItem mapItemForCurrentLocation];
+    MKPlacemark *plmark = [[MKPlacemark alloc] initWithCoordinate: myAnnotation.coordinate addressDictionary:nil];
+    MKMapItem *desItem = [[MKMapItem alloc] initWithPlacemark:plmark];
+    request.destination = desItem;
+    request.requestsAlternateRoutes = YES;
+    request.transportType = MKDirectionsTransportTypeAutomobile;
+    MKDirections *directions =
+    [[MKDirections alloc] initWithRequest:request];
+    __block typeof(self) weakSelf = self;
+    [directions calculateDirectionsWithCompletionHandler:
+     ^(MKDirectionsResponse *response, NSError *error) {
+         if (error) {
+             // Handle Error
+         } else {
+             route = [response.routes firstObject];
+             [weakSelf.mapView addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
+         }
+     }];
+    
+    
 }
+
+-(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay{
+    MKPolylineRenderer *polylineRender = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
+    polylineRender.lineWidth = 3.0f;
+    polylineRender.strokeColor = [UIColor magentaColor];
+    return polylineRender;
+}
+
 
 
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
@@ -322,6 +411,8 @@
     
     
 }
+
+
 
 #pragma mark - fetch request methods
 
@@ -355,6 +446,33 @@
     [self.tableView beginUpdates];
 }
 
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    switch (type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+        case NSFetchedResultsChangeUpdate:
+            //[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+    }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    switch (type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView endUpdates];
+}
 
 
 /*

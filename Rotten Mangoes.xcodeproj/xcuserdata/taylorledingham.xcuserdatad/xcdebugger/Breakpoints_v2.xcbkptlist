@@ -120,11 +120,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rotten Mangoes/TheatreMapViewController.m"
-            timestampString = "436493560.366353"
+            timestampString = "436580449.073446"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
             landmarkName = "-getTheatresFromPostalCode"
             landmarkType = "5">
          </BreakpointContent>
@@ -136,11 +136,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rotten Mangoes/TheatreMapViewController.m"
-            timestampString = "436493560.366353"
+            timestampString = "436580449.073446"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253"
+            startingLineNumber = "316"
+            endingLineNumber = "316"
             landmarkName = "-loadTheatreArray"
             landmarkType = "5">
          </BreakpointContent>
@@ -152,11 +152,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Rotten Mangoes/TheatreMapViewController.m"
-            timestampString = "436493560.366353"
+            timestampString = "436580449.073446"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "247"
-            endingLineNumber = "247"
+            startingLineNumber = "308"
+            endingLineNumber = "308"
             landmarkName = "-loadTheatreArray"
             landmarkType = "5">
          </BreakpointContent>

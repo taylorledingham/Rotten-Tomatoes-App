@@ -19,6 +19,8 @@
     MovieCollectionViewFooterCollectionReusableView *footer;
     NSString *nextPageURLString;
     int currentPage;
+    NSMutableArray *_objectChanges;
+    NSMutableArray *_sectionChanges;
     
 }
 
@@ -36,7 +38,7 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.fetchedResultsController performFetch:nil];
 
     [self loadMovies];
-    [self loadMovieArray];
+   // [self loadMovieArray];
 
     // Do any additional setup after loading the view.
 }
@@ -63,6 +65,7 @@ static NSString * const reuseIdentifier = @"Cell";
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.collectionView reloadData];
+                [self.collectionView layoutIfNeeded];
             });
         }
     }] resume];
@@ -94,6 +97,7 @@ static NSString * const reuseIdentifier = @"Cell";
                 movie = [result firstObject];
             }
             
+            
             //Movie *movie = [[Movie alloc]init];
             //NSNumber *moveid = currMovie[@"id"];
             movie.movieID = currMovie[@"id"];
@@ -114,9 +118,10 @@ static NSString * const reuseIdentifier = @"Cell";
            // NSURL *url = [NSURL URLWithString: imageString];
             movie.moviePosterURL = imageString;
             
-            //[self.movieArray addObject:movie];
+            //[self.collectionView reloadData];
 
     }
+    
     
     if (self.movieArrayFromAPI == nil){
         NSLog(@"skipping deletes");
@@ -139,7 +144,7 @@ static NSString * const reuseIdentifier = @"Cell";
         }
     
     [coreDataStack saveContext];
-    [self.collectionView reloadData];
+    
 
     
     
@@ -316,19 +321,88 @@ static NSString * const reuseIdentifier = @"Cell";
 //    }
 //    }
 //
-//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-//    {
-//
-//    if (self.shouldReloadCollectionView) {
-//        [self.collectionView reloadData];
-//    } else {
-//        [self.collectionView performBatchUpdates:^{
-//            [self.blockOperation start];
-//        } completion:nil];
-//    }
-//    
-//    }
 
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath
+{
+    NSMutableDictionary *change = [NSMutableDictionary new];
+    switch(type)
+    {
+        case NSFetchedResultsChangeInsert:
+            change[@(type)] = newIndexPath;
+            break;
+        case NSFetchedResultsChangeDelete:
+            change[@(type)] = indexPath;
+            break;
+        case NSFetchedResultsChangeUpdate:
+            change[@(type)] = indexPath;
+            break;
+        case NSFetchedResultsChangeMove:
+            change[@(type)] = @[indexPath, newIndexPath];
+            break;
+    }
+    [_objectChanges addObject:change];
+}
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    if ([_sectionChanges count] > 0)
+    {
+        [self.collectionView performBatchUpdates:^{
+            for (NSDictionary *change in _sectionChanges)
+            {
+                [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
+                    NSFetchedResultsChangeType type = [key unsignedIntegerValue];
+                    switch (type)
+                    {
+                        case NSFetchedResultsChangeInsert:
+                            [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                            break;
+                        case NSFetchedResultsChangeDelete:
+                            [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                            break;
+                        case NSFetchedResultsChangeUpdate:
+                            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
+                            break;
+                    }
+                }];
+            }
+        } completion:nil];
+    }
+    if ([_objectChanges count] > 0 && [_sectionChanges count] == 0)
+    {
+        if (self.collectionView.window == nil) {
+
+            [self.collectionView reloadData];
+        } else {
+            [self.collectionView performBatchUpdates:^{
+                for (NSDictionary *change in _objectChanges)
+                {
+                    [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
+                        NSFetchedResultsChangeType type = [key unsignedIntegerValue];
+                        switch (type)
+                        {
+                            case NSFetchedResultsChangeInsert:
+                                [self.collectionView insertItemsAtIndexPaths:@[obj]];
+                                break;
+                            case NSFetchedResultsChangeDelete:
+                                [self.collectionView deleteItemsAtIndexPaths:@[obj]];
+                                break;
+                            case NSFetchedResultsChangeUpdate:
+                                [self.collectionView reloadItemsAtIndexPaths:@[obj]];
+                                break;
+                            case NSFetchedResultsChangeMove:
+                                [self.collectionView moveItemAtIndexPath:obj[0] toIndexPath:obj[1]];
+                                break;
+                        }
+                    }];
+                }
+            } completion:nil];
+        }
+    }
+    [_sectionChanges removeAllObjects];
+    [_objectChanges removeAllObjects];
+}
 
 
 @end
